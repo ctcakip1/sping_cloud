@@ -1,10 +1,11 @@
 package com.example.ecommerce.category;
 
-import com.example.ecommerce.product.Product;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;
+
+import com.example.ecommerce.product.dto.Product;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,5 +20,5 @@ public class Category {
     private String name;
     private String description;
     @OneToMany(mappedBy = "category", cascade = CascadeType.REMOVE)
-    private List<Product> category;
+    private List<Product> products;
 }

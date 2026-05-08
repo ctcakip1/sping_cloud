@@ -1,4 +1,4 @@
-package com.example.ecommerce.product;
+package com.example.ecommerce.product.dto;
 
 
 import com.example.ecommerce.category.Category;
