@@ -10,4 +10,6 @@ import com.example.ecommerce.product.dto.Product;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Integer> {
     List<Product> findAllByIdInOrderById(List<Integer> productIds);
+
+    List<Product> findAllByIdIn(List<Integer> productIds);
 }

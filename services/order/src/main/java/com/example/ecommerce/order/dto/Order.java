@@ -1,5 +1,56 @@
 package com.example.ecommerce.order.dto;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.List;
+
+import org.hibernate.annotations.Collate;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import com.example.ecommerce.order.PaymantMethod;
+import com.example.ecommerce.orderline.dto.OrderLine;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@Getter
+@Setter
+@Entity
+@EntityListeners(AuditingEntityListener.class)
+@Table(name = "customer_order")
 public class Order {
+    @Id
+    @GeneratedValue
+    private Integer id;
+    private String reference;
+    private BigDecimal totalAmount;
+    @Enumerated(EnumType.STRING)
+    private PaymantMethod paymantMethod;
+    private String customerId;
+    @OneToMany(mappedBy = "order")
+    private List<OrderLine> orderLines;
+    @CreatedDate
+    @Column(insertable = false, nullable = false)
+    private LocalDateTime createdAt;
+    @LastModifiedBy
+    @Column(insertable = false)
+    private LocalDateTime updatedAt;
 
 }
