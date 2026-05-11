@@ -16,6 +16,8 @@ import com.example.ecommerce.order.dto.req.OrderRequest;
 import com.example.ecommerce.order.dto.res.OrderResponse;
 import com.example.ecommerce.orderline.OrderLineService;
 import com.example.ecommerce.orderline.dto.req.OrderLineRequest;
+import com.example.ecommerce.payment.PaymentClient;
+import com.example.ecommerce.payment.PaymentRequest;
 import com.example.ecommerce.product.ProductClient;
 import com.example.ecommerce.product.PurchaseRequest;
 
@@ -31,6 +33,7 @@ public class OrderServiceImpl implements OrderService {
     private final OrderMapper orderLineMapper;
     private final OrderLineService orderLineService;
     private final OrderProducer orderProducer;
+    private PaymentClient paymentClient;
 
     @Override
     public Integer createOrder(OrderRequest request) {
@@ -42,6 +45,13 @@ public class OrderServiceImpl implements OrderService {
             orderLineService.saveOrderLine(new OrderLineRequest(
                     null, order.getId(), purchaseRequest.productId(), purchaseRequest.quantity()));
         }
+
+        paymentClient.requestOrderPayment(new PaymentRequest(
+                request.amount(),
+                request.paymantMethod(),
+                order.getId(),
+                request.reference(),
+                customer));
 
         orderProducer.sendOrderConfirmation(new OrderConfirmation(
                 request.reference(),
