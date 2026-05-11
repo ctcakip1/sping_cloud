@@ -1,5 +1,7 @@
 package com.example.ecommerce.order;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -7,9 +9,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.ecommerce.order.dto.req.OrderRequest;
+import com.example.ecommerce.order.dto.res.OrderResponse;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping("api/v1/orders")
@@ -17,10 +23,20 @@ import lombok.RequiredArgsConstructor;
 public class OrderController {
     private final OrderService orderService;
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<Integer> createOrder(
             @Valid @RequestBody OrderRequest orderRequest) {
         return ResponseEntity.ok(orderService.createOrder(orderRequest));
+    }
+
+    @GetMapping("")
+    public ResponseEntity<List<OrderResponse>> findAll() {
+        return ResponseEntity.ok(orderService.findAll());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<OrderResponse> findById(@PathVariable("id") Integer id) {
+        return ResponseEntity.ok(orderService.findById(id));
     }
 
 }
