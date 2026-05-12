@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class ProductController {
     private final ProductService productService;
 
-    @PostMapping("/create")
+    @PostMapping
     public ResponseEntity<Integer> create(@Valid @RequestBody ProductRequestDTO request) {
         return ResponseEntity.ok(productService.create(request));
     }
@@ -44,7 +44,7 @@ public class ProductController {
         return ResponseEntity.ok(productService.findById(productId));
     }
 
-    @GetMapping("")
+    @GetMapping
     public ResponseEntity<List<ProductResponseDTO>> findAll() {
         return ResponseEntity.ok(productService.findAll());
     }

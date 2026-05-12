@@ -2,6 +2,9 @@ package com.example.ecommerce.payment.dto;
 
 import com.example.ecommerce.payment.dto.req.PaymentRequest;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class PaymentMapper {
     public Payment toPayment(PaymentRequest request) {
         return Payment.builder()

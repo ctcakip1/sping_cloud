@@ -23,13 +23,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class OrderController {
     private final OrderService orderService;
 
-    @PostMapping("/create")
-    public ResponseEntity<Integer> createOrder(
-            @Valid @RequestBody OrderRequest orderRequest) {
+    @PostMapping
+    public ResponseEntity<Integer> createOrder(@Valid @RequestBody OrderRequest orderRequest) {
         return ResponseEntity.ok(orderService.createOrder(orderRequest));
     }
 
-    @GetMapping("")
+    @GetMapping
     public ResponseEntity<List<OrderResponse>> findAll() {
         return ResponseEntity.ok(orderService.findAll());
     }

@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class PaymentController {
     private final PaymentService paymentService;
 
-    @PostMapping("/create")
+    @PostMapping
     public ResponseEntity<Integer> create(@RequestBody @Valid PaymentRequest request) {
         return ResponseEntity.ok(paymentService.create(request));
     }

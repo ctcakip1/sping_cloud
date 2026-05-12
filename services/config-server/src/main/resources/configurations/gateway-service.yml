@@ -9,22 +9,22 @@ spring:
           enabled: true
       routes:
         - id: customer-service
-          uri: lb:http://CUSTOMER_SERVICE
+          uri: lb://CUSTOMER-SERVICE
           predicates:
             - Path=/api/v1/customers/**
         - id: product-service
-          uri: lb:http://PRODUCT_SERVICE
+          uri: lb://PRODUCT-SERVICE
           predicates:
             - Path=/api/v1/products/**
         - id: order-service
-          uri: lb:http://ORDER_SERVICE
+          uri: lb://ORDER-SERVICE
           predicates:
             - Path=/api/v1/orders/**
-        - id: orderline-service
-          uri: lb:http://ORDER_SERVICE
+        - id: order-lines-service
+          uri: lb://ORDER-SERVICE
           predicates:
-            - Path=/api/v1/orderlines/**
+            - Path=/api/v1/order-lines/**
         - id: payment-service
-          uri: lb:http://PAYMENT_SERVICE
+          uri: lb://PAYMENT-SERVICE
           predicates:
             - Path=/api/v1/payments/**
