@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8fafc;
+            margin: 0;
+            padding: 0;
+            color: #1e293b;
+        }
+        .container {
+            max-width: 650px;
+            margin: 40px auto;
+            background-color: #ffffff;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+        .header {
+            background-color: #0f172a;
+            color: #ffffff;
+            padding: 50px 40px;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 32px;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+        .header p {
+            margin: 10px 0 0;
+            color: #94a3b8;
+            font-size: 18px;
+        }
+        .content {
+            padding: 40px;
+        }
+        .greeting {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #0f172a;
+        }
+        .message {
+            font-size: 16px;
+            color: #64748b;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        .order-summary {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 20px 0;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .order-summary th {
+            background-color: #f1f5f9;
+            padding: 15px;
+            text-align: left;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #475569;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .order-summary td {
+            padding: 20px 15px;
+            border-bottom: 1px solid #e2e8f0;
+            vertical-align: middle;
+        }
+        .order-summary tr:last-child td {
+            border-bottom: none;
+        }
+        .product-name {
+            font-weight: 600;
+            color: #1e293b;
+            display: block;
+        }
+        .product-desc {
+            font-size: 13px;
+            color: #64748b;
+            margin-top: 4px;
+        }
+        .total-section {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f8fafc;
+            border-radius: 12px;
+        }
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        .total-row.grand-total {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 2px dashed #e2e8f0;
+            font-size: 20px;
+            font-weight: 800;
+            color: #0f172a;
+        }
+        .label {
+            color: #64748b;
+        }
+        .value {
+            font-weight: 600;
+            color: #1e293b;
+        }
+        .footer {
+            padding: 40px;
+            text-align: center;
+            background-color: #f1f5f9;
+            color: #64748b;
+            font-size: 14px;
+        }
+        .footer a {
+            color: #0f172a;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .order-ref {
+            display: inline-block;
+            background-color: #f1f5f9;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-family: monospace;
+            font-weight: 700;
+            color: #0f172a;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Order Confirmed!</h1>
+            <p>Order Reference: <span th:text="${orderReference}">#ORD-0000</span></p>
+        </div>
+        <div class="content">
+            <div class="greeting">Hi <span th:text="${customerName}">Customer</span>,</div>
+            <p class="message">Great news! We've received your order and it's being processed. We'll send you another email as soon as your items are on their way. Here is a summary of what you ordered:</p>
+            
+            <table class="order-summary">
+                <thead>
+                    <tr>
+                        <th>Product Details</th>
+                        <th style="text-align: center;">Qty</th>
+                        <th style="text-align: right;">Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="product : ${products}">
+                        <td>
+                            <span class="product-name" th:text="${product.name}">Product Name</span>
+                            <span class="product-desc" th:text="${product.description}">Product description goes here.</span>
+                        </td>
+                        <td style="text-align: center;" th:text="${product.quantity}">1</td>
+                        <td style="text-align: right; font-weight: 600;">$<span th:text="${product.price}">0.00</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="total-section">
+                <div class="total-row grand-total">
+                    <span>Total Amount Paid</span>
+                    <span>$<span th:text="${totalAmount}">0.00</span></span>
+                </div>
+            </div>
+
+            <div style="margin-top: 40px; text-align: center;">
+                <p style="font-weight: 600;">Track your order status on our website</p>
+                <a href="#" style="display: inline-block; background-color: #0f172a; color: #ffffff; padding: 14px 30px; border-radius: 8px; text-decoration: none; font-weight: 600; margin-top: 10px;">Go to My Orders</a>
+            </div>
+        </div>
+        <div class="footer">
+            <p>Thank you for shopping with us!</p>
+            <p>If you have any questions, please visit our <a href="#">Help Center</a> or contact our <a href="#">Support Team</a>.</p>
+            <p style="margin-top: 20px; font-size: 12px; opacity: 0.7;">&copy; 2026 E-Commerce Microservices. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>
