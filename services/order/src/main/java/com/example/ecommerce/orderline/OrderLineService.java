@@ -8,7 +8,6 @@ import com.example.ecommerce.orderline.dto.OrderLine;
 import com.example.ecommerce.orderline.dto.req.OrderLineRequest;
 import com.example.ecommerce.orderline.dto.res.OrderLineResponse;
 
-@Service
 public interface OrderLineService {
     Integer saveOrderLine(OrderLineRequest orderLineRequest);
 

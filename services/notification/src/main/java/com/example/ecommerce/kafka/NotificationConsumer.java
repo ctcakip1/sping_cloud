@@ -31,9 +31,9 @@ public class NotificationConsumer {
                 Notification.builder().type(NotificationType.ORDER_CONFIRMATION).notificationDate(LocalDateTime.now())
                         .orderConfirmation(notification).build());
 
-        var customerName = notification.customer().firstname() + " " + notification.customer().lastname();
+        var customerName = notification.customer().firstName() + " " + notification.customer().lastName();
         emailService.sendOrderConfirmationEmail(notification.customer().email(), customerName,
-                notification.totalAmount(), notification.orderReference(), notification.products());
+                notification.amount(), notification.orderReference(), notification.products());
     };
 
     @KafkaListener(topics = "payment-topic")

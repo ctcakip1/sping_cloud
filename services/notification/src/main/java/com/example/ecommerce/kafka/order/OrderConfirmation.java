@@ -7,8 +7,8 @@ import com.example.ecommerce.kafka.payment.PaymentMethod;
 
 public record OrderConfirmation(
                 String orderReference,
-                BigDecimal totalAmount,
-                PaymentMethod paymentMethod,
+                BigDecimal amount,
+                PaymentMethod paymantMethod,
                 Customer customer,
                 List<Product> products) {
 

@@ -30,17 +30,17 @@ public class OrderServiceImpl implements OrderService {
     private final CustomerClient customerClient;
     private final ProductClient productClient;
     private final OrderRepository orderRepository;
-    private final OrderMapper orderLineMapper;
+    private final OrderMapper orderMapper;
     private final OrderLineService orderLineService;
     private final OrderProducer orderProducer;
-    private PaymentClient paymentClient;
+    private final PaymentClient paymentClient;
 
     @Override
     public Integer createOrder(OrderRequest request) {
         var customer = customerClient.findById(request.customerId())
                 .orElseThrow(() -> new BusinessException("Customer not found"));
         var purchasedProducts = this.productClient.purchaseProducts(request.products());
-        var order = this.orderRepository.save(orderLineMapper.toOrder(request));
+        var order = this.orderRepository.save(orderMapper.toOrder(request));
         for (PurchaseRequest purchaseRequest : request.products()) {
             orderLineService.saveOrderLine(new OrderLineRequest(
                     null, order.getId(), purchaseRequest.productId(), purchaseRequest.quantity()));
@@ -65,12 +65,12 @@ public class OrderServiceImpl implements OrderService {
 
     public List<OrderResponse> findAll() {
         return orderRepository.findAll().stream()
-                .map(orderLineMapper::fromOrder).collect(Collectors.toList());
+                .map(orderMapper::fromOrder).collect(Collectors.toList());
     }
 
     public OrderResponse findById(Integer id) {
         return orderRepository.findById(id)
-                .map(orderLineMapper::fromOrder)
+                .map(orderMapper::fromOrder)
                 .orElseThrow(() -> new EntityNotFoundException("Order not found with id: " + id));
     }
 }
