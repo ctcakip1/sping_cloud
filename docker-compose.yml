@@ -85,6 +85,18 @@ services:
     networks:
       - microservices-net
 
+  keycloak:
+    container_name: ms_keycloak
+    image: quay.io/keycloak/keycloak:latest
+    command: start-dev
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    ports:
+      - 9090:8080
+    networks:
+      - microservices-net
+
 networks:
   microservices-net:
     driver: bridge
